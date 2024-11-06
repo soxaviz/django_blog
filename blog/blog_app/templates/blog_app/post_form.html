@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Создать/Изменить статью
+{% endblock %}
+
+{% block content %}
+<!--request.POST -> текстовый контент-->
+<!--request.FILES-->
+<div class="container">
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="file" multiple
+               name="gallery" id="gallery" class="form-control mb-3">
+        <button class="btn btn-dark">отправить</button>
+    </form>
+</div>
+{% endblock %}

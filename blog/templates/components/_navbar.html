@@ -1,0 +1,57 @@
+<!--сделать страницу контактов-->
+{% load blog_app_tags %}
+
+{% get_categories as categories %}
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary mb-4">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'index' %}">Blog Django</a>  <!--логотип-->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">  <!--доступность сайта-->
+                    <a class="nav-link active" aria-current="page" href="#">О нас</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contacts' %}">Контакты</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Категории
+                    </a>
+                    <ul class="dropdown-menu">
+                        {% for category in categories %}
+                        <li><a class="dropdown-item" href="{% url 'category' category.pk %}">{{ category }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            </ul>
+
+            <div class="d-flex gap-3">
+                {% if request.user.is_authenticated %}
+                <a href="{% url 'create' %}" class="btn btn-primary">Создать пост</a>
+
+                <!--create/-->
+                <!--post_form.html-->
+                <!--create_post_view -->
+
+                {% endif %}
+                <form class="d-flex" role="search" action="{% url 'search' %}">
+                    <input name="q" class="form-control me-2" type="search" placeholder="Поиск" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Поиск</button>
+                </form>
+                {% if not request.user.is_authenticated %}
+                <!--/, /contacts/, /categories/1/-->
+                <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-success">Войти</a>
+                <a href="{% url 'registration' %}" class="btn btn-warning">Регистрация</a>
+                {% else %}
+                <a href="{% url 'logout' %}?next={{ request.path }}" class="btn btn-danger">Выйти</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</nav>

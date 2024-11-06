@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}
+123
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+    <section class="mb-5">
+        <div id="carouselExampleCaptions" class="carousel slide">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+                        aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
+            </div>  <!--галактический футбол-->
+            <div class="carousel-inner"> <!--HomeSlider.photo.url-->
+                {% for slide in slides %}
+                <div class="carousel-item active">
+                    <img style="height: 400px;"
+                         src="{{ slide.photo.url }}"
+                         class="d-block w-100" alt="...">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5>{{ slide.title }}</h5>
+                        <p>{{ slide.text }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </section>
+
+    <section class="mb-5">
+        <h2 class="text-center mb-5">Статьи</h2>
+        <div class="row row-gap-4">
+            {% for post in posts %}
+            <div class="col-3">
+                {% include 'components/_card-item.html' %}
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="mb-5">
+        <h2 class="text-center mb-5">Ответы на вопросы</h2>
+        <div class="accordion" id="accordionExample">
+            {% for faq in faqs %}
+
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#faq-{{ faq.pk }}" aria-expanded="true" aria-controls="collapseOne">
+                        {{ faq.question }}
+                    </button>
+                </h2>
+                <div id="faq-{{ faq.pk }}"
+                     class="accordion-collapse collapse {% if forloop.counter  == 1 %}show{% endif %}"
+                     data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        {{ faq.answer }}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+<div>
+    <img src="" alt="">
+    <img src="" alt="">
+    <img src="" alt="">
+    <img src="" alt="">
+    <img src="" alt="">
+    <img src="" alt="">
+</div>

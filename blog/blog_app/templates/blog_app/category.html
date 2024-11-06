@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}
+категория: {{ category.name }}
+{% endblock %}
+
+
+{% block content %}
+Категория: {{ category.name }}
+<div class="container">
+<!--    # margin-top:
+    # margin-bottom:
+    # mx-->
+    <div class="d-flex justify-content-between my-3 align-items-center">
+        <div>
+            {% if request.environ.QUERY_STRING == 'sort=views' %}
+            <a href="?sort=-views">По просмотрам</a>
+            {% else %}
+            <a href="?sort=views">По просмотрам</a>
+            {% endif %}
+
+            {% if request.environ.QUERY_STRING == 'sort=created_at' %}
+            <a href="?sort=-created_at">По дате создания</a>
+            {% else %}
+            <a href="?sort=created_at">По дате создания</a>
+            {% endif %}
+
+            {% if request.environ.QUERY_STRING == 'sort=name' %}
+            <a href="?sort=-name">По алфавиту</a>
+            {% else %}
+            <a href="?sort=name">По алфавиту</a>
+            {% endif %}
+        </div>
+        <form action="" class="d-flex">
+            <input type="text" class="form-control me-3"
+                   name="q"
+                   placeholder="Найти в категории {{ category.name }}">
+            <button class="btn btn-dark">Найти</button>
+        </form>
+    </div>
+
+    <div class="row row-gap-4">
+        {% for post in posts %}
+        <div class="col-3">
+            {% include 'components/_card-item.html' %}
+        </div>
+        {% empty %}
+        <h2 class="text-center">Нет статей</h2>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
